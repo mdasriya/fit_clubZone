@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-const UserLoginScreen = () => {
+const UserLoginScreen = ({ navigation }) => {
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
@@ -12,17 +12,16 @@ const UserLoginScreen = () => {
   const [email, setEmail] = useState('');
   const [contactNumber, setContactNumber] = useState('');
 
-  const genderOptions = [
-    { label: 'Select Gender', value: '' },
-    { label: 'Male', value: 'Male' },
-    { label: 'Female', value: 'Female' },
-    { label: 'Other', value: 'Other' },
-  ];
+  const handleDashboard = () => {
+    alert("hello")
+    navigation.navigate('UserDashboard');
+  }
 
   const handleButtonPress = () => {
     setIsButtonPressed(true);
     // Handle form submission logic here
     console.log('Form submitted:', { name, age, gender, height, weight, email, contactNumber });
+    // navigation.navigate('UserDashboard');
   };
 
   return (
@@ -42,15 +41,6 @@ const UserLoginScreen = () => {
           onChangeText={setAge}
           keyboardType="numeric"
         />
-        {/* <View style={styles.pickerContainer}>
-          <RNPickerSelect
-            style={{ inputAndroid: styles.input }}
-            items={genderOptions}
-            placeholder={{ label: 'Select Gender', value: null }}
-            onValueChange={setGender}
-            value={gender}
-          />
-        </View> */}
         <TextInput
           style={styles.input}
           placeholder="Height"
@@ -63,7 +53,6 @@ const UserLoginScreen = () => {
           placeholder="Gender"
           value={gender}
           onChangeText={setGender}
-  
         />
         <TextInput
           style={styles.input}
@@ -86,13 +75,13 @@ const UserLoginScreen = () => {
           onChangeText={setContactNumber}
           keyboardType="phone-pad"
         />
+        <TouchableOpacity
+          style={[styles.button, isButtonPressed && styles.buttonPressed]}
+          onPress={handleButtonPress}
+        >
+          <Text style={styles.buttonText} onPress={handleDashboard}>Login</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={[styles.button, isButtonPressed && styles.buttonPressed]}
-        onPress={handleButtonPress}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -109,6 +98,10 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    elevation: 3, // Add box shadow
+    padding: 20,
   },
   input: {
     height: 40,
@@ -139,6 +132,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    textAlign:"center",
   },
 });
 
